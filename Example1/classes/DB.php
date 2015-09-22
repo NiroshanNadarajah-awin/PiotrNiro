@@ -1,64 +1,69 @@
-<?php 
+<?php
 
-class DB {
+class DB
+{
 
-	Private $_mysqli,
-			$_query,
-			$_results = array(),
-			$_count=0;
+    private $_mysqli;
 
-	public static $instance;
+    /**
+     * @var sting Superb query to a database.
+     */
+    private $_query;
+    private $_results = array();
+    private $_count = 0;
 
-	
-	Public static function getInstance(){
+    public static $instance = null;
 
-		// if '!isset' means = if the perticular this is set or not
-		// 'self' means = referencing this perticular class
+    /**
+     * @return DB|null
+     */
+    public static function getInstance()
+    {
+        // if '!isset' means = if the perticular this is set or not
+        // 'self' means = referencing this perticular class
 
-		if(!isset(self::$instance))
-		{
-			self::$instance = new DB();
-		}
-		return self::$instance;
+        if (!isset(self::$instance)) {
+            self::$instance = new DB();
+        }
 
-	}
-
-		
-
-	Public function __construct(){
-
-			$this->_mysqli = new mysqli('127.0.0.1','root','','singleton');
-				
-				if($this->_mysqli->connect_error){
-
-					die($this->_mysqli->connect_error);	
-				}
-		}
-
-	Public function query($sql) {
-		if ($this->_query  = $this->_mysqli->query($sql)) {
-			
-			while($row = $this->_query->fetch_object()) {
-				$this->_results[] = $row;
-				}
-			
-				$this->_count = $this->_query->num_rows;
-			}
-
-			return $this;
-		}
+        return self::$instance;
+    }
 
 
-	Public function results(){
-		return $this->_results;
-	}
+    public function __construct()
+    {
+        $this->_mysqli = new mysqli('127.0.0.1', 'root', '', 'reports');
+
+        if ($this->_mysqli->connect_error) {
+
+            die($this->_mysqli->connect_error);
+        }
+    }
+
+    public function query($sql)
+    {
+        if ($this->_query = $this->_mysqli->query($sql)) {
+
+            while ($row = $this->_query->fetch_object()) {
+                $this->_results[] = $row;
+            }
+
+            $this->_count = $this->_query->num_rows;
+        }
+
+        return $this;
+    }
 
 
-	Public function count(){
-		return $this->_count;
-	}
+    public function results()
+    {
+        return $this->_results;
+    }
+
+
+    public function count()
+    {
+        return $this->_count;
+    }
 
 }
-
-
-?>

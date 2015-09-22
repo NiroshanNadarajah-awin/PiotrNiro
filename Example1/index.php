@@ -5,15 +5,14 @@
 
 require_once('classes/DB.php');
 
-echo "<pre>" ;
-print_r($users = DB::getInstance()->query('SELECT * FROM users'));
- echo "</pre>";
+$users = DB::getInstance()->query('SELECT * FROM single_device limit 1');
 
-if($users->count()){
-	foreach($users->results() as $user){
-
-		echo 'id: ', $user->id, ' ', 'Name: ', $user->name, "<br>";
-	}
+if ($users->count()) {
+    foreach ($users->results() as $user) {
+        //echo 'id: ', $user->transaction_checksum, ' ', 'Name: ', $user->transaction_affiliate_id, "<br>";
+    }
 }
+
+$db1 = new DB();
 
 ?>
