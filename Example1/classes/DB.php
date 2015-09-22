@@ -2,6 +2,7 @@
 
 class DB
 {
+    private $_niro = "1";
 
     private $_mysqli;
 
@@ -24,14 +25,16 @@ class DB
 
         if (!isset(self::$instance)) {
             self::$instance = new DB();
+            self::$instance->initConnection();
         }
 
         return self::$instance;
     }
 
-
-    public function __construct()
+    private function initConnection()
     {
+        echo "Running the init\n";
+
         $this->_mysqli = new mysqli('127.0.0.1', 'root', '', 'reports');
 
         if ($this->_mysqli->connect_error) {
@@ -64,6 +67,22 @@ class DB
     public function count()
     {
         return $this->_count;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNiro()
+    {
+        return $this->_niro;
+    }
+
+    /**
+     * @param string $niro
+     */
+    public function setNiro($niro)
+    {
+        $this->_niro = $niro;
     }
 
 }

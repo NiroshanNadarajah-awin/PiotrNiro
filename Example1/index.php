@@ -13,6 +13,34 @@ if ($users->count()) {
     }
 }
 
+print "Niro for users = " . $users->getNiro();
+
 $db1 = new DB();
+$db2 = new DB();
+
+print "Niro for db1 = " . $db1->getNiro();
+
+$db1->setNiro(5);
+
+print "\n\n ---- \n\n";
+print "\nNiro for users = " . $users->getNiro();
+print "\nNiro for db1 = " . $db1->getNiro();
+
+$piotr = DB::getInstance();
+$piotr->setNiro(6);
+
+$dev = DB::getInstance();
+$dev->setNiro(666);
+
+$db1->setNiro(777);
+
+print "\n\n ---- \n\n";
+print "\nNiro for users = " . $users->getNiro();  // 666
+print "\nNiro for db1 = " . $db1->getNiro();      // 777
+
+
 
 ?>
+
+
+
